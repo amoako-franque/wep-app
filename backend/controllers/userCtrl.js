@@ -12,10 +12,6 @@ exports.deleteUser = asyncHandler(async (req, res) => {
   res.send("delete user and user posts")
 })
 
-exports.getMyProfile = asyncHandler(async (req, res) => {
-  res.send("view my profile")
-})
-
 exports.getUserProfile = asyncHandler(async (req, res) => {
   res.send("view users profile")
 })

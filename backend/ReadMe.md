@@ -1,41 +1,40 @@
 **API documentation**
 
-1.  CD into "server folder"
+1.  CD into each folder; thus "backend " and "frontend "
 2.  Next `run npm install to install all dependencies`
 3.  create a dotenv file
 4.  fill up the environment variables
 
->     CONNECTIONSTRING = //mongodb-connection string
+> MONGODB_URI = //mongodb-connection string
 >
 > JWT_SECRET = "enter your jwt secret here"
 > PORT = 5000
-> NODE_ENV =Development
 
-5.  Run `npm run server` in your terminal from the root of the folder
-6.  server will be started on `http://localhost:5000` at default
-7.  All api routes starts with `http://localhost:5000`
-8.  open the routes folder to know the specific url path for each request
-9.  Lastly, check the models to know the type of data and the required user input data required for each route and request.
-10. I am available to assist if needed.
+1.  Run `npm run server` in your terminal from the root of the folder
+2.  server will be started on `http://localhost:5000` at default
+3.  All api routes starts with `http://localhost:5000`
+4.  open the routes folder to know the specific url path for each request
+5.  Lastly, check the models to know the type of data and the required user input data required for each route and request.
+6.  I am available to assist if needed.
 
 ## ALL API ROUTES
 
+**AUTH ROUTES**
+
+1.  ##### REGISTER USER ROUTE `http://localhost:5000/regsiter`
+2.  ##### LOGIN USER ROUTE `http://localhost:5000/login`
+3.  ##### FORGOT PASSWORD ROUTE `http://localhost:5000/forgot-password`
+
 **USER ROUTES**
 
-1.  ##### GET USER PROFILE ROUTE `http://localhost:5000/me`
-2.  ##### GET A USER ROUTE `http://localhost:5000/user/:slug`
-3.  ##### SEARCH USER ROUTE `http://localhost:5000/user/search`
-4.  ##### GET ALL SUBSCRIBERS ROUTE `http://localhost:5000/:username/blogs`
-5.  ##### UPDATE USER ROUTE `http://localhost:5000/user/profile`
-6.  ##### DELETE USER ROUTE `http://localhost:5000/user/:slug`
+1.  ##### GET A USER ROUTE `http://localhost:5000/user/:slug`
+2.  ##### UPDATE USER ROUTE `http://localhost:5000/user/profile`
+3.  ##### DELETE USER ROUTE `http://localhost:5000/user/:slug`
 
-**BLOG ROUTES**
+**POST ROUTES**
 
-1.  ##### GET ALL BLOGS ROUTE `http://localhost:5000/blogs`
-2.  ##### GET A BLOG ROUTE `http://localhost:5000/blog/:slug`
-3.  ##### SEARCH BLOG ROUTE `http://localhost:5000/blogs/search`
-4.  ##### GET USER BLOGS ROUTE `http://localhost:5000/:username/blogs`
-5.  ##### ADD BLOG ROUTE `http://localhost:5000/blog`
-6.  ##### UPDATE A BLOG ROUTE `http://localhost:5000/blog/:slug`
-7.  ##### DELETE BLOG ROUTE `http://localhost:5000/blog/:slug`
-8.  ##### DELETE BLOG BY ADMIN ROUTE `http://localhost:5000/admin/blog/:slug`
+1.  ##### GET ALL POSTS ROUTE `http://localhost:5000/posts`
+2.  ##### GET A POST ROUTE `http://localhost:5000/post/:slug`
+3.  ##### CREATE POST ROUTE `http://localhost:5000/post`
+4.  ##### UPDATE A POST ROUTE `http://localhost:5000/post/:slug`
+5.  ##### DELETE POST ROUTE `http://localhost:5000/post/:slug`
