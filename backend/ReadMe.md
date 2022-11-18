@@ -23,12 +23,12 @@
 
 1.  ##### REGISTER USER ROUTE `http://localhost:5000/regsiter`
 2.  ##### LOGIN USER ROUTE `http://localhost:5000/login`
-3.  ##### FORGOT PASSWORD ROUTE `http://localhost:5000/forgot-password`
+3.  ##### LOGOUT ROUTE `http://localhost:5000/logout`
 
 **USER ROUTES**
 
-1.  ##### GET A USER ROUTE `http://localhost:5000/user/:slug`
-2.  ##### UPDATE USER ROUTE `http://localhost:5000/user/profile`
+1.  ##### GET ALL USERS ROUTE `http://localhost:5000/userS`
+2.  ##### UPDATE USER ROUTE `http://localhost:5000/user/update/:slug`
 3.  ##### DELETE USER ROUTE `http://localhost:5000/user/:slug`
 
 **POST ROUTES**
