@@ -11,6 +11,18 @@ const userSchema = new Schema(
       trim: true,
       min: 4,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: [
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        "Please enter a valid email address",
+      ],
+    },
+
     firstName: {
       type: String,
       default: "",
@@ -28,22 +40,6 @@ const userSchema = new Schema(
       type: String,
       min: 6,
       required: [true, "Please enter your password"],
-    },
-
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-      match: [
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        "Please enter a valid email address",
-      ],
-    },
-    secret: {
-      type: String,
-      required: true,
     },
     slug: {
       type: String,

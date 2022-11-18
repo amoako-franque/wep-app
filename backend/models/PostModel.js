@@ -7,11 +7,14 @@ const postSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
+      min: 3,
+      max: 160,
     },
     shortDesc: {
       type: String,
     },
-    content: {
+    body: {
       type: String,
       required: true,
       minLength: 40,
@@ -34,6 +37,6 @@ const postSchema = new Schema(
   { timestamps: true }
 )
 
-const Post = mongoose.model("Blog", postSchema)
+const Post = mongoose.model("Post", postSchema)
 
 module.exports = Post
