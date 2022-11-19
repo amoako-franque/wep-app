@@ -27,3 +27,9 @@ router.delete(
 )
 
 module.exports = router
+
+// {
+
+// "email": "myusername@mail.com",
+// "password": "myusername"
+// }

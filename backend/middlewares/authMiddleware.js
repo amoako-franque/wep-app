@@ -30,7 +30,7 @@ exports.requireSignIn = asyncHandler(async (req, res, next) => {
         }
 
         const userId = verifiedToken.userId
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).select("-password")
         if (!user) {
           return res
             .status(401)

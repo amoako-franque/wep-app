@@ -39,4 +39,4 @@ app.listen(port, () =>
   console.log(`app listening on port ${port}! http://localhost:${port}`)
 )
 
-// will work on posts tomorrow.
+//will start frontend tomorrow
