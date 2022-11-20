@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.siteHeader {
+  background-color: #56727c;
+}
+
+.isActive {
+  background: rgb(68, 13, 188);
+  color: antiquewhite;
+}
