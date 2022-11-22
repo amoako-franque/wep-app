@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const PostForm = () => {
+const PostForm = ({ user }) => {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
@@ -15,6 +15,10 @@ const PostForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!title || !body) {
+      toast.error("Please fill the title and body")
+      return
+    }
     try {
       const response = axios.post("/api/v1/user/post", formData)
       if (response.data.success) {
@@ -30,7 +34,7 @@ const PostForm = () => {
         })
         setFormData({ title: "", body: "" })
       } else {
-        toast.error(response.data.message,)
+        toast.error(response.data.message)
       }
     } catch (error) {
       toast.error("Something went wrong")
@@ -58,15 +62,15 @@ const PostForm = () => {
           className="w-[600px] p-4 bg-slate-50  border border-gray-800 rounded-lg outline-none resize-none min-h-[250px]"
           placeholder="Whats on your mind ..."
         />
-      </div>
-      <div className="flex justify-end">
-        {" "}
-        <button
-          className="w-20 h-8 mt-3 font-semibold rounded-lg hover:shadow-md bg-orange-4 siteHeader hover:bg-lime-900"
-          type="submit"
-        >
-          Send
-        </button>
+        <div className="flex">
+          {" "}
+          <button
+            className="w-20 h-8 mt-3 font-semibold rounded-lg hover:shadow-md bg-orange-4 siteHeader hover:bg-lime-900"
+            type="submit"
+          >
+            Send
+          </button>
+        </div>
       </div>
     </form>
   )
