@@ -11,7 +11,20 @@ function App() {
   return (
     <div className="">
       <Navbar />
-      <ToastContainer />
+      <ToastContainer
+        reverseOrder={false}
+        position="top-center"
+        autoClose={1000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
