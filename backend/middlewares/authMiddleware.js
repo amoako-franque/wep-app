@@ -35,6 +35,7 @@ exports.requireSignIn = asyncHandler(async (req, res, next) => {
           .status(401)
           .json({ error: "Unauthorized. Sign in to continue" })
 
+      console.log("require sign in")
       req.user = user
 
       next()

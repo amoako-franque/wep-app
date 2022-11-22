@@ -20,6 +20,14 @@ exports.createPost = asyncHandler(async (req, res) => {
       return res.status(400).json({ message: "Please enter a title" })
     }
 
+    const capitalize = (str) => {
+      if (typeof str === "string") {
+        return str.replace(/^\w/, (c) => c.toUpperCase())
+      } else {
+        return ""
+      }
+    }
+
     const slug = slugify(title).toLowerCase()
     const existingSlug = await Post.findOne({ slug }).exec()
     if (existingSlug) {
@@ -27,9 +35,10 @@ exports.createPost = asyncHandler(async (req, res) => {
         message: "Post with same title exists. Use a different title.",
       })
     }
+
     const post = await Post.create({
       body,
-      title,
+      title: capitalize(title),
       slug,
       postedBy: req.user._id,
     })
@@ -62,6 +71,8 @@ exports.getPostBySlug = asyncHandler(async (req, res) => {
 
   try {
     const post = await Post.findOne({ slug })
+      .lean()
+      .populate("postedBy", "_id username")
 
     if (!post) {
       return res.status(404).json({
@@ -106,8 +117,16 @@ exports.updatePost = asyncHandler(async (req, res) => {
   const { title, body } = req.body
   const postUpdate = {}
 
+  const capitalize = (str) => {
+    if (typeof str === "string") {
+      return str.replace(/^\w/, (c) => c.toUpperCase())
+    } else {
+      return ""
+    }
+  }
+
   if (title) {
-    postUpdate.title = title
+    postUpdate.title = capitalize(title)
     const slug = slugify(title).toLowerCase()
     const existingSlug = await Post.findOne({ slug }).exec()
     existingSlug &&
@@ -163,6 +182,8 @@ exports.canDeletePost = (req, res, next) => {
 
 exports.canUpdatePost = (req, res, next) => {
   const slug = req.params.slug.toLowerCase()
+  console.log(slug)
+  console.log(req.user)
 
   Post.findOne({ slug }).exec((err, data) => {
     if (err) {
@@ -170,7 +191,7 @@ exports.canUpdatePost = (req, res, next) => {
         error: err,
       })
     }
-
+    console.log("working... can update")
     let authorizedUser = data.postedBy._id.toString() === req.user.id.toString()
     if (!authorizedUser) {
       return res.status(400).json({

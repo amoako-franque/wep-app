@@ -16,6 +16,30 @@ exports.fetchUsers = asyncHandler(async (req, res) => {
   }
 })
 
+exports.getUserById = asyncHandler(async (req, res) => {
+  //console.log(req.user.id)
+  const userId = req.user.id
+
+  try {
+    const user = await User.findById(userId)
+    user.password = undefined
+    if (!user) {
+      return res
+        .status(200)
+        .send({ message: "User does not exist", success: false })
+    } else {
+      res.status(200).send({
+        success: true,
+        data: user,
+      })
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error getting user info", success: false, error })
+  }
+})
+
 exports.profileUpdate = asyncHandler(async (req, res) => {
   if (req.user.slug !== req.params.slug.toLowerCase()) {
     res.status(400).json({ error: "Please Sign in to continue" })
@@ -103,4 +127,3 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     res.status(500).send("Server error")
   }
 })
-

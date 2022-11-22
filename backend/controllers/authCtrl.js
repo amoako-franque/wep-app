@@ -80,26 +80,7 @@ exports.login = asyncHandler(async (req, res) => {
   }
 })
 
-exports.getUserById = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findOne({ _id: require.user.id })
-    user.password = undefined
-    if (!user) {
-      return res
-        .status(200)
-        .send({ message: "User does not exist", success: false })
-    } else {
-      res.status(200).send({
-        success: true,
-        data: user,
-      })
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Error getting user info", success: false, error })
-  }
-})
+
 
 exports.logout = asyncHandler(async (req, res, next) => {
   const cookies = req.cookies
