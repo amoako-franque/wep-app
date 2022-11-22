@@ -23,6 +23,15 @@ app.use(xssClean())
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000, //10 Mins
   max: 100,
+  message: {
+    message:
+      "Too many login attempts from this IP, please try again after a 60 second pause",
+  },
+  handler: (req, res, next, options) => {
+    res.status(options.statusCode).send(options.message)
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 })
 
 app.use(limiter)
@@ -30,7 +39,7 @@ app.use(limiter)
 app.get("/api-test", (req, res) => res.json({ time: Date().toString() }))
 
 fs.readdirSync("./routes").map((route) =>
-  app.use("/", require("./routes/" + route))
+  app.use("/api/v1/", require("./routes/" + route))
 )
 
 const port = process.env.PORT || 8080
@@ -40,3 +49,4 @@ app.listen(port, () =>
 )
 
 //will start frontend tomorrow
+//http://localhost:5000

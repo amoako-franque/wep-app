@@ -39,13 +39,6 @@ exports.register = asyncHandler(async (req, res) => {
   })
 
   if (user) {
-    const userToken = createToken(user._id, email)
-    user.password = undefined
-    res.cookie("token", userToken, {
-      expiresIn: "1d",
-      httpOnly: true,
-      maxAge: 30 * 24 * 60 * 60 * 1000,
-    })
     return res.status(201).json({
       message: "Signup success! Please login.",
       success: true,
@@ -53,23 +46,23 @@ exports.register = asyncHandler(async (req, res) => {
   } else {
     return res
       .status(400)
-      .json({ message: "Registration failed. Please try again later" })
+      .json({ error: "Registration failed. Please try again later" })
   }
 })
 
 exports.login = asyncHandler(async (req, res) => {
-  const { email, password } = req.body
-  const user = await User.findOne({ email })
+  const { username, password } = req.body
+  const user = await User.findOne({ username })
 
   if (!user) {
     return res
-      .status(401)
-      .json({ message: "This user does not exist. Please sign up " })
+      .status(400)
+      .json({ error: "This user does not exist. Please sign up " })
   }
   const match = await bcrypt.compare(password, user.password)
 
   if (match) {
-    const userToken = createToken(user._id, email)
+    const userToken = createToken(user._id, user.email)
 
     res.cookie("token", userToken, {
       httpOnly: true,
@@ -80,11 +73,31 @@ exports.login = asyncHandler(async (req, res) => {
     user.password = undefined
     return res.status(200).json({
       message: `Welcome back ${user.username}`,
-      user,
       token: userToken,
     })
   } else {
     return res.status(401).json({ error: "Invalid user credentials" })
+  }
+})
+
+exports.getUserById = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: require.user.id })
+    user.password = undefined
+    if (!user) {
+      return res
+        .status(200)
+        .send({ message: "User does not exist", success: false })
+    } else {
+      res.status(200).send({
+        success: true,
+        data: user,
+      })
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "Error getting user info", success: false, error })
   }
 })
 

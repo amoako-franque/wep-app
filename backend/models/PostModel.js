@@ -28,6 +28,11 @@ const postSchema = new Schema(
       required: true,
       ref: "User",
     },
+
+    createdAt: {
+      type: String,
+      default: new Date(),
+    },
   },
   { timestamps: true }
 )
