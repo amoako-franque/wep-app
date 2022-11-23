@@ -53,7 +53,7 @@ const Register = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col items-center">
               <input
-                className="p-2 my-2 border rounded-md w-72"
+                className="p-2 my-2 border-b-4 rounded-md border-slate-500 w-72"
                 type="text"
                 placeholder="Username"
                 name="username"
@@ -61,7 +61,7 @@ const Register = () => {
                 onChange={onChange}
               />{" "}
               <input
-                className="p-2 my-2 border rounded-md w-72"
+                className="p-2 my-2 border-b-4 rounded-md border-slate-500 w-72"
                 type="email"
                 placeholder="Email"
                 name="email"
@@ -69,7 +69,7 @@ const Register = () => {
                 onChange={onChange}
               />
               <input
-                className="p-2 my-2 border rounded-md w-72"
+                className="p-2 my-2 border-b-4 rounded-md border-slate-500 w-72"
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -79,7 +79,7 @@ const Register = () => {
               />{" "}
             </div>
             <div className="flex justify-center my-2">
-              <button className="p-2 font-sans border rounded-md hover:text-lime-200 hover:cursor-pointer w-72 siteHeader">
+              <button className="p-2 font-sans border rounded-md hover:text-lime-200 hover:bg-black hover:cursor-pointer w-72 siteHeader">
                 Register
               </button>
             </div>

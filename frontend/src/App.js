@@ -1,17 +1,18 @@
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { Route, Routes } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import Home from "./Home"
 import Login from "./Login"
 import Post from "./Post"
 import Register from "./Register"
-import Navbar from "./Navbar"
 import UpdatePost from "./UpdatePost"
 
 function App() {
+  const user = localStorage.getItem("user")
+  user && console.log(user)
+
   return (
     <div className="">
-      {/* <Navbar /> */}
       <ToastContainer
         reverseOrder={false}
         position="top-center"

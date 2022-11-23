@@ -24,13 +24,14 @@ const Login = () => {
       return
     }
 
+ 
+
     try {
       const response = await axios.post("/api/v1/login", formData)
       if (!response.error) {
         //console.log(response.data)
         toast.success(response.data.message)
         localStorage.setItem("token", response.data.token)
-        console.log(response.data.token)
         navigate("/")
       } else {
         toast.success(response.data.error)
@@ -55,7 +56,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col items-center">
               <input
-                className="p-2 mb-6 border rounded-md w-72"
+                className="p-2 mb-6 border-b-4 rounded-md border-slate-500 w-72"
                 type="text"
                 placeholder="Username"
                 name="username"
@@ -73,7 +74,7 @@ const Login = () => {
               />{" "}
             </div>
             <div className="flex justify-center my-2">
-              <button className="p-2 font-sans border rounded-md hover:text-lime-200 hover:cursor-pointer w-72 siteHeader">
+              <button className="p-2 font-sans border rounded-md hover:text-lime-200 hover:cursor-pointer hover:bg-black w-72 siteHeader">
                 Login
               </button>
             </div>

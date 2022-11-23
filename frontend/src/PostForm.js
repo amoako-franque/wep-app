@@ -1,17 +1,24 @@
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const PostForm = ({ user }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    body: "",
-  })
+const PostForm = () => {
+  const refreshPage = () => {
+    window.location.reload()
+  }
+  const userRef = useRef()
+  const [title, setTitle] = useState("")
+  const [body, setBody] = useState("")
 
-  const { title, body } = formData
+  useEffect(() => {
+    userRef.current.focus()
+  }, [])
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+  // const onChange = (e) =>
+  //   setFormData({ ...formData, [e.target.name]: e.target.value })
+
+  const handleTitleInput = (e) => setTitle(e.target.value)
+  const handleBodyInput = (e) => setBody(e.target.value)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -19,25 +26,48 @@ const PostForm = ({ user }) => {
       toast.error("Please fill the title and body")
       return
     }
+    const token = localStorage.getItem("token")
+    if (!token) {
+      toast.error("Sign in ")
+      return
+    }
+
+    //console.log({token})
     try {
-      const response = axios.post("/api/v1/user/post", formData)
-      if (response.data.success) {
-        toast.success(response.data.message, {
-          position: "top-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+      axios
+        .post(
+          "/api/v1/user/post",
+          {
+            title,
+            body,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then(function (response) {
+          console.log(response)
+          toast.success(response.data.message, {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          })
+          setTitle("")
+          setBody("")
+          refreshPage()
         })
-        setFormData({ title: "", body: "" })
-      } else {
-        toast.error(response.data.message)
-      }
+        .catch(function (error) {
+          console.log(error)
+        })
     } catch (error) {
-      toast.error("Something went wrong")
+      toast.error(error)
     }
   }
 
@@ -49,16 +79,17 @@ const PostForm = ({ user }) => {
           className="w-[600px] p-4 bg-slate-50 mb-3  border border-gray-800 rounded-lg outline-none resize-none min-h-[50px]"
           placeholder="Enter post title"
           name="title"
+          ref={userRef}
           id="title"
           value={title}
-          onChange={onChange}
+          onChange={handleTitleInput}
         />
 
         <textarea
           name="body"
           id="body"
           value={body}
-          onChange={onChange}
+          onChange={handleBodyInput}
           className="w-[600px] p-4 bg-slate-50  border border-gray-800 rounded-lg outline-none resize-none min-h-[250px]"
           placeholder="Whats on your mind ..."
         />
