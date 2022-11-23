@@ -2,7 +2,6 @@ const Post = require("../models/PostModel")
 const slugify = require("slugify")
 const User = require("../models/UserModel")
 const asyncHandler = require("express-async-handler")
-const { response } = require("express")
 
 exports.createPost = asyncHandler(async (req, res) => {
   if (!req.user) {
@@ -28,6 +27,10 @@ exports.createPost = asyncHandler(async (req, res) => {
       }
     }
 
+    const getWordStr = (str) => {
+      return str.split(/\s+/).slice(0, 200).join(" ")
+    }
+
     const slug = slugify(title).toLowerCase()
     const existingSlug = await Post.findOne({ slug }).exec()
     if (existingSlug) {
@@ -40,7 +43,8 @@ exports.createPost = asyncHandler(async (req, res) => {
       body,
       title: capitalize(title),
       slug,
-      postedBy: req.user._id,
+      shortDesc: getWordStr(body),
+      postedBy: req.user.id,
     })
 
     return res.status(201).json({
@@ -53,7 +57,10 @@ exports.createPost = asyncHandler(async (req, res) => {
 })
 
 exports.fetchAllPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().lean().populate("postedBy", "_id username")
+  const posts = await Post.find()
+    .lean()
+    .populate("postedBy", "_id username")
+    .sort({ createdAt: "asc" })
   if (!posts?.length) {
     return res.status(404).send({ message: "No posts found" })
   }
@@ -152,6 +159,7 @@ exports.updatePost = asyncHandler(async (req, res) => {
       }
     ).exec()
     return res.status(200).json({
+      message: "Post updated",
       updatedPost,
     })
   } catch (err) {

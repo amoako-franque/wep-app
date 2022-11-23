@@ -12,6 +12,9 @@ const postSchema = new Schema(
       min: 3,
       max: 160,
     },
+    shortDesc: {
+      type: String,
+    },
     body: {
       type: String,
       required: true,

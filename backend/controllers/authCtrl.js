@@ -70,17 +70,19 @@ exports.login = asyncHandler(async (req, res) => {
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
+
     user.password = undefined
+
+    
     return res.status(200).json({
       message: `Welcome back ${user.username}`,
       token: userToken,
+      user,
     })
   } else {
     return res.status(401).json({ error: "Invalid user credentials" })
   }
 })
-
-
 
 exports.logout = asyncHandler(async (req, res, next) => {
   const cookies = req.cookies
